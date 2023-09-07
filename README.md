@@ -1,15 +1,15 @@
 # cable_record
 
-A new Flutter project.
+A new Flutter project to store cable records.
 
-## Getting Started
+## Description
 
-This project is a starting point for a Flutter application.
+This project is a web based application which Includes features like authentication,realtime database connectivity.
 
-A few resources to get you started if this is your first Flutter project:
+ Contributors of this project are :
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- [Nelson](https://github.com/nelson08007)
+- [Devi Priya](https://github.com/devippriya)
 
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
