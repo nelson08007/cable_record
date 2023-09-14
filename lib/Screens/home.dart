@@ -26,6 +26,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Database db = Database();
 
+  DateTime selectedDate = DateTime.now();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(1990, 1),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,8 +50,101 @@ class _HomeScreenState extends State<HomeScreen> {
         icon: const Icon(Icons.add),
         backgroundColor: Colors.red,
         onPressed: () {
-          db.addCustomer(
-              "nandini", "145", "5668786", false, true, "11, ss street", "P1");
+          // db.addCustomer( "nandini", "145", "5668786", false, true, "11, ss street", "P1");
+          showDialog(
+            context: context,
+            builder: (ctx) => AlertDialog(
+              title: const Text("Enter Customer Details"),
+              content: Container(
+                width: 500,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      decoration: const InputDecoration(
+                          label: Text("Name"), hintText: "Enter customer name"),
+                    ),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                          label: Text("Box Number"),
+                          hintText: "Enter box Number"),
+                    ),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                          label: Text("Address"),
+                          hintText: "Enter customer address"),
+                    ),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                          label: Text("Phone number"),
+                          hintText: "Enter Phone number"),
+                    ),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                          label: Text("Package"), hintText: "Enter Package"),
+                    ),
+                    Row(
+                      children: [
+                        const Text("Connection Status : "),
+                        Switch(
+                          onChanged: (val) {
+                            setState(() {
+                              isConnected = val;
+                            });
+                          },
+                          value: isConnected,
+                          activeColor: Colors.green,
+                          activeTrackColor: Colors.greenAccent,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Text("Select Connection date : "),
+                        Text(selectedDate.day.toString() +
+                            '/' +
+                            selectedDate.month.toString() +
+                            '/' +
+                            selectedDate.year.toString()),
+                        IconButton(
+                            icon: const Icon(Icons.calendar_month),
+                            onPressed: () {
+                              setState(() {
+                                _selectDate(context);
+                              });
+                            })
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Text("Payment Status : "),
+                        Switch(
+                          onChanged: (val) {
+                            setState(() {
+                              isConnected = val;
+                            });
+                          },
+                          value: isConnected,
+                          activeColor: Colors.green,
+                          activeTrackColor: Colors.greenAccent,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.red),
+                  ),
+                  onPressed: () {
+                    Navigator.of(ctx).pop();
+                  },
+                  child: Text("Save"),
+                ),
+              ],
+            ),
+          );
         },
       ),
       body: StreamBuilder<QuerySnapshot>(
